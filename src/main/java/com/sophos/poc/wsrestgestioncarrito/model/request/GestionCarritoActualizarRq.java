@@ -4,6 +4,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sophos.poc.wsrestgestioncarrito.dto.CarritoDetalleDTO;
 
 public class GestionCarritoActualizarRq {
+	@Override
+	public String toString() {
+		return "GestionCarritoActualizarRq [idSession=" + idSession + ", cart=" + cart + "]";
+	}
+
 	@JsonProperty("idSession")
 	private String idSession = null;
 	

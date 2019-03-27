@@ -14,7 +14,10 @@ public class GestionCarritoConsultarRq {
 	public void setIdSession(String idSession) {
 		this.idSession = idSession;
 	}
-	
 
+	@Override
+	public String toString() {
+		return "GestionCarritoConsultarRq [idSession=" + idSession + "]";
+	}
 
 }

@@ -1,5 +1,7 @@
 package com.sophos.poc.wsrestgestioncarrito.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,8 @@ public class ConsultarCarritoService {
 	@Autowired
 	ConfigurationProperties pr;
 	
+	private static final Logger logger = LogManager.getLogger(ConsultarCarritoService.class);
+	
 	public GestionCarritoConsultarRs getCart(String sessionKey) {
 		if (pr.getCacheSource().equals(pr.CACHE_SOURCE_REDIS)) {
 			try {
@@ -33,7 +37,7 @@ public class ConsultarCarritoService {
 					return response;
 				}
 			} catch (Exception e) {
-				System.err.println("Error en consulta a REDIS: " + e);
+				logger.error("Error en consulta a REDIS: " + e);
 			}
 		} else {
 			CarritoDTO carrito = carritos.getCarrito(sessionKey);

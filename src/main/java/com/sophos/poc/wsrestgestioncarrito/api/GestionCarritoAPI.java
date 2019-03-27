@@ -3,6 +3,8 @@ package com.sophos.poc.wsrestgestioncarrito.api;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ import com.sophos.poc.wsrestgestioncarrito.model.request.GestionCarritoConsultar
 import com.sophos.poc.wsrestgestioncarrito.model.response.GestionCarritoActualizarRs;
 import com.sophos.poc.wsrestgestioncarrito.model.response.GestionCarritoConsultarRs;
 import com.sophos.poc.wsrestgestioncarrito.service.ActualizarCarritoService;
+import com.sophos.poc.wsrestgestioncarrito.service.AuditoriaService;
 import com.sophos.poc.wsrestgestioncarrito.service.ConsultarCarritoService;
 import com.sophos.poc.wsrestgestioncarrito.service.GestionCarritoSecurityService;
 
@@ -36,16 +39,21 @@ public class GestionCarritoAPI {
 	private ConsultarCarritoService consultarCarrito;
 	@Autowired
 	private GestionCarritoSecurityService security;
+	@Autowired
+	private AuditoriaService auditoria;
+	
+	private static final Logger logger = LogManager.getLogger(GestionCarritoAPI.class);
 	
 	@SuppressWarnings("unused")
 	private final ObjectMapper objectMapper;
 	private final HttpServletRequest request; 
-	public GestionCarritoAPI(ObjectMapper objectMapper, HttpServletRequest request, GestionCarritoSecurityService security, ConsultarCarritoService consultarCarrito, ActualizarCarritoService actualizarCarrito) {
+	public GestionCarritoAPI(ObjectMapper objectMapper, HttpServletRequest request, GestionCarritoSecurityService security, ConsultarCarritoService consultarCarrito, ActualizarCarritoService actualizarCarrito, AuditoriaService auditoria ) {
 		this.objectMapper = objectMapper;
 		this.request = request;
 		this.security = security;
 		this.consultarCarrito = consultarCarrito;
 		this.actualizarCarrito = actualizarCarrito;
+		this.auditoria = auditoria;
 	}
 	
 	
@@ -79,22 +87,31 @@ public class GestionCarritoAPI {
 		GestionCarritoConsultarRs response = new GestionCarritoConsultarRs();
 		String contentType = request.getContentType();
 		String tokenSesion = request.getHeader("X-Sesion");
+		logger.info("GestionCarritoConsultarRq:  contentType= " + contentType + "IdSesion="+rq.getIdSession());
+		logger.info("GestionCarritoConsultarRq: " + rq.toString() );
+		String statusRs = null;
 		if (contentType != null && contentType.contains("application/json") && 
 				tokenSesion != null && tokenSesion != "") {
-			try {				
-				if (security.verifyJwtToken(tokenSesion, rq.getIdSession() )) {
+			try {
+				if (security.verifyJwtToken(tokenSesion, rq.getIdSession())) {
 					response = consultarCarrito.getCart(rq.getIdSession());
+					statusRs = HttpStatus.OK.toString();
 					return new ResponseEntity<GestionCarritoConsultarRs>(response, HttpStatus.OK);
-				}
-				else {
+				} else {
+					statusRs = HttpStatus.UNAUTHORIZED.toString();
 					return new ResponseEntity<GestionCarritoConsultarRs>(HttpStatus.UNAUTHORIZED);
 				}
-				}catch (Exception e) {
-					System.out.println(e);
-					return new ResponseEntity<GestionCarritoConsultarRs>(HttpStatus.INTERNAL_SERVER_ERROR);
-				}
+			} catch (Exception e) {
+				logger.error("GestionCarritoConsultarRs ERROR: " + e );
+				return new ResponseEntity<GestionCarritoConsultarRs>(HttpStatus.INTERNAL_SERVER_ERROR);
+			} finally {
+				logger.info("GestionCarritoConsultarRs - HttpStatus: "+ statusRs );
+				logger.info("GestionCarritoConsultarRs - Response: "+ response.toString() );
 			}
-		return new ResponseEntity<GestionCarritoConsultarRs>(HttpStatus.UNAUTHORIZED);
+		}
+		statusRs = HttpStatus.NOT_IMPLEMENTED.toString();
+		logger.info("GestionCarritoConsultarRs - HttpStatus: "+ statusRs );
+		return new ResponseEntity<GestionCarritoConsultarRs>(HttpStatus.NOT_IMPLEMENTED);
 	}
 	
 	@ApiOperation(value = "Servicio encargado de actualizar la informacion del carrito de compras asociado a la sesion del usuario", response = GestionCarritoConsultarRs.class)
@@ -126,19 +143,33 @@ public class GestionCarritoAPI {
 	public ResponseEntity<GestionCarritoActualizarRs> actualizarCarrito(@ApiParam(value = "Identificador Único con formato de 32 dígitos hexadecimales divididos en guiones: 550e8400-e29b-41d4-a716-446655440000" ,required=true) @RequestHeader(value="X-RqUID", required=true) String xRqUID,@ApiParam(value = "Nemonico de Canal Origen de la Transaccion" ,required=true) @RequestHeader(value="X-Channel", required=true) String xChannel,@ApiParam(value = "IP de origen donde se realiza la invocación de servicio o api" ,required=true) @RequestHeader(value="X-IPAddr", required=true) String xIPAddr,@ApiParam(value = "Sesion o token de autenticación del uso del api" ,required=true) @RequestHeader(value="X-Sesion", required=true) String xSesion,@ApiParam(value = "Request de solicitud actualizacion carrito" ,required=true )  @Valid @RequestBody GestionCarritoActualizarRq rq) {		
 		String contentType = request.getContentType();
 		String tokenSesion = request.getHeader("X-Sesion");
+		logger.info("GestionCarritoActualizarRq:  contentType= " + contentType + "IdSesion="+rq.getIdSession());
+		logger.info("GestionCarritoActualizarRq: " + rq.toString() );
+		String statusRs = null;
 		if (contentType != null && contentType.contains("application/json") && 
 				tokenSesion != null && tokenSesion != "") {
 			try {	
 				if (security.verifyJwtToken(tokenSesion, rq.getIdSession())) {
 					actualizarCarrito.updateCart(rq.getIdSession(), rq);
+					String rqUID =  request.getHeader("X-RqUID");
+					String channel =  request.getHeader("X-Channel");
+					String ip =  request.getHeader("X-IPAddr");					
+					auditoria.sendAudit(rqUID,channel,ip,tokenSesion, rq);
+					statusRs = HttpStatus.OK.toString();
 					return new ResponseEntity<GestionCarritoActualizarRs>(HttpStatus.OK);
 				}else {
+					statusRs = HttpStatus.UNAUTHORIZED.toString();
 					return new ResponseEntity<GestionCarritoActualizarRs>(HttpStatus.UNAUTHORIZED);
 				}
 				}catch (Exception e) {
+					logger.error("GestionCarritoActualizarRs ERROR: " + e );
 					return new ResponseEntity<GestionCarritoActualizarRs>(HttpStatus.INTERNAL_SERVER_ERROR);
+				}finally {
+					logger.info("GestionCarritoActualizarRs - HttpStatus: "+ statusRs );
 				}
 			}
-		return new ResponseEntity<GestionCarritoActualizarRs>(HttpStatus.UNAUTHORIZED);
+		statusRs = HttpStatus.NOT_IMPLEMENTED.toString();
+		logger.info("GestionCarritoActualizarRs - HttpStatus: "+ statusRs );
+		return new ResponseEntity<GestionCarritoActualizarRs>(HttpStatus.NOT_IMPLEMENTED);
 	}
 }

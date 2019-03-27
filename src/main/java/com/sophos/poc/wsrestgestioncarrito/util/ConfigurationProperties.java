@@ -14,11 +14,13 @@ public class ConfigurationProperties {
 	
 	private static final String FILE = "configuration.properties";
 	private static final String CACHE_SOURCE = "cache.source";
-	private static final String SECURITY_EP_VAL = "security.endpoint.validate";
+	public final String APP_NAME = "wsRestGestionCarrito";
 	public final String SECURITY_SUCCESS = "00";
 	public final String CACHE_SOURCE_REDIS = "REDIS";
 	public final String POC_REDIS_HOST = "POC_REDIS_HOST";
 	public final String POC_REDIS_PORT = "POC_REDIS_PORT";
+	public final String POC_SERVICE_AUDIT_VALIDATE = "POC_SERVICE_AUDIT_VALIDATE";
+	public final String ACT_UPDATE_CART = "updateCart";
 	
 	public ConfigurationProperties getInstance() {
 		if (instance == null) {
@@ -33,7 +35,7 @@ public class ConfigurationProperties {
 			InputStream inputStream = ConfigurationProperties.class.getClassLoader().getResourceAsStream(FILE); 
 			pr.load(inputStream);
 			setCacheSource(pr.getProperty(CACHE_SOURCE));	
-			setSecurityEndpointValidation(pr.getProperty(SECURITY_EP_VAL));
+			setSecurityEndpointValidation(System.getenv("POC_SERVICE_SECURITY_VALIDATE"));
 		}catch(Exception e) {
 			
 		}

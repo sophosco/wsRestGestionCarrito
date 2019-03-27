@@ -2,6 +2,8 @@ package com.sophos.poc.wsrestgestioncarrito.service;
 
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,7 @@ public class ActualizarCarritoService {
 	CarritoDTORepository redisRepository;
 	@Autowired
 	ConfigurationProperties pr;
+	private static final Logger logger = LogManager.getLogger(ActualizarCarritoService.class);
 	
 	public void updateCart(String idSession, @Valid GestionCarritoActualizarRq rq) {
 		
@@ -32,7 +35,7 @@ public class ActualizarCarritoService {
 			try {
 				redisRepository.save(carro);	
 			}catch (Exception e) {
-				System.err.println("Error REDIS:" + e);
+				logger.error("Error Actualizacion en REDIS:" + e);
 			}				
 		}else {
 			carritos.addCarrito(idSession, carro);

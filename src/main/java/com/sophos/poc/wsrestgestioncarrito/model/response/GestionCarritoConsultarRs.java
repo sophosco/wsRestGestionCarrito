@@ -31,5 +31,10 @@ public class GestionCarritoConsultarRs {
 	public void setCart(CarritoDetalleDTO cart) {
 		this.cart = cart;
 	}
+
+	@Override
+	public String toString() {
+		return "GestionCarritoConsultarRs [idSession=" + idSession + ", cart=" + cart + "]";
+	}
 	
 }

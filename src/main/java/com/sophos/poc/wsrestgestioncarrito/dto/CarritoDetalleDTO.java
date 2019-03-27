@@ -10,6 +10,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-03-20T23:44:12.597Z")
 public class CarritoDetalleDTO {
 
+	@Override
+	public String toString() {
+		return "CarritoDetalleDTO [totalPrice=" + totalPrice + ", totalCartCount=" + totalCartCount + ", compareList="
+				+ compareList + ", wishList=" + wishList + ", productoList=" + productoList + "]";
+	}
+
 	@JsonProperty("totalPrice")
 	private Long totalPrice = null;
 	
