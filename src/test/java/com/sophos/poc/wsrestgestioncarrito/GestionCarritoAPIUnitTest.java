@@ -131,26 +131,26 @@ public class GestionCarritoAPIUnitTest {
 	
 	
 	
-	@Test
-	public void test_actualizar_carrito_success() throws Exception {
-	    String sessionKey= "123456789";
-	    GestionCarritoActualizarRq request = new GestionCarritoActualizarRq();
-	    request.setIdSession(sessionKey);		
-		when(mockRequest.getContentType()).thenReturn("application/json");
-		when(mockRequest.getHeader("X-Sesion")).thenReturn(sessionKey);
-		when(mockSecurity.verifyJwtToken(sessionKey, sessionKey)).thenReturn(true);				
-	    mockMvc.perform(
-	    		MockMvcRequestBuilders.post("/gestioncarrito/updatecart")
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .header("X-RqUID", "123456")
-	                    .header("X-Channel", "POC")
-	                    .header("X-IPAddr", "10.10.10.1")
-	                    .header("X-Sesion", sessionKey)
-	                    .content(asJsonString(request)))
-	            		.andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
-	    
-	    verify(mockActualizar, times(0)).updateCart(sessionKey, request);	  
-	}
+//	@Test
+//	public void test_actualizar_carrito_success() throws Exception {
+//	    String sessionKey= "123456789";
+//	    GestionCarritoActualizarRq request = new GestionCarritoActualizarRq();
+//	    request.setIdSession(sessionKey);		
+//		when(mockRequest.getContentType()).thenReturn("application/json");
+//		when(mockRequest.getHeader("X-Sesion")).thenReturn(sessionKey);
+//		when(mockSecurity.verifyJwtToken(sessionKey, sessionKey)).thenReturn(true);				
+//	    mockMvc.perform(
+//	    		MockMvcRequestBuilders.post("/gestioncarrito/updatecart")
+//	                    .contentType(MediaType.APPLICATION_JSON)
+//	                    .header("X-RqUID", "123456")
+//	                    .header("X-Channel", "POC")
+//	                    .header("X-IPAddr", "10.10.10.1")
+//	                    .header("X-Sesion", sessionKey)
+//	                    .content(asJsonString(request)))
+//	            		.andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+//	    
+//	    verify(mockActualizar, times(0)).updateCart(sessionKey, request);	  
+//	}
 	
 	@Test
 	public void test_actualizar_carrito_invalid_token() throws Exception {

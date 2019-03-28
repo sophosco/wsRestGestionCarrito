@@ -40,8 +40,8 @@ public class GestionCarritoAPI {
 	@Autowired
 	private GestionCarritoSecurityService security;
 	@Autowired
-	private AuditoriaService auditoria;
-	
+	private AuditoriaService auditoria;	
+
 	private static final Logger logger = LogManager.getLogger(GestionCarritoAPI.class);
 	
 	@SuppressWarnings("unused")
@@ -54,8 +54,7 @@ public class GestionCarritoAPI {
 		this.consultarCarrito = consultarCarrito;
 		this.actualizarCarrito = actualizarCarrito;
 		this.auditoria = auditoria;
-	}
-	
+	}	
 	
 	@ApiOperation(value = "Servicio encargado de retornar la informacion del carrito de compras asociado a la sesion del usuario", response = GestionCarritoConsultarRs.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Transacción Exitosa"),
@@ -95,7 +94,7 @@ public class GestionCarritoAPI {
 			try {
 				if (security.verifyJwtToken(tokenSesion, rq.getIdSession())) {
 					response = consultarCarrito.getCart(rq.getIdSession());
-					statusRs = HttpStatus.OK.toString();
+					statusRs = HttpStatus.OK.toString();			
 					return new ResponseEntity<GestionCarritoConsultarRs>(response, HttpStatus.OK);
 				} else {
 					statusRs = HttpStatus.UNAUTHORIZED.toString();
@@ -111,7 +110,7 @@ public class GestionCarritoAPI {
 		}
 		statusRs = HttpStatus.NOT_IMPLEMENTED.toString();
 		logger.info("GestionCarritoConsultarRs - HttpStatus: "+ statusRs );
-		return new ResponseEntity<GestionCarritoConsultarRs>(HttpStatus.NOT_IMPLEMENTED);
+		return  new ResponseEntity<GestionCarritoConsultarRs>(HttpStatus.NOT_IMPLEMENTED);
 	}
 	
 	@ApiOperation(value = "Servicio encargado de actualizar la informacion del carrito de compras asociado a la sesion del usuario", response = GestionCarritoConsultarRs.class)
@@ -172,4 +171,5 @@ public class GestionCarritoAPI {
 		logger.info("GestionCarritoActualizarRs - HttpStatus: "+ statusRs );
 		return new ResponseEntity<GestionCarritoActualizarRs>(HttpStatus.NOT_IMPLEMENTED);
 	}
+	
 }
