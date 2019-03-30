@@ -27,7 +27,7 @@ import com.sophos.poc.wsrestgestioncarrito.util.ConfigurationProperties;
 public class AuditoriaService {
 	
 	@Autowired
-	ConfigurationProperties pr;
+	private ConfigurationProperties pr;
 	
 	private static final Logger logger = LogManager.getLogger(AuditoriaService.class);
 	

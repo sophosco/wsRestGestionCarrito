@@ -18,11 +18,11 @@ import com.sophos.poc.wsrestgestioncarrito.util.ConfigurationProperties;
 public class ActualizarCarritoService {
 
 	@Autowired
-	GestionCarritoCacheManagement carritos;
+	private GestionCarritoCacheManagement carritos;
 	@Autowired
-	CarritoDTORepository redisRepository;
+	private CarritoDTORepository redisRepository;
 	@Autowired
-	ConfigurationProperties pr;
+	private ConfigurationProperties pr;
 	private static final Logger logger = LogManager.getLogger(ActualizarCarritoService.class);
 	
 	public void updateCart(String idSession, @Valid GestionCarritoActualizarRq rq) {

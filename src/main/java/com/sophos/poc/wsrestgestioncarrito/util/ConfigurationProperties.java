@@ -3,6 +3,8 @@ package com.sophos.poc.wsrestgestioncarrito.util;
 import java.io.InputStream;
 import java.util.Properties;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
@@ -22,6 +24,8 @@ public class ConfigurationProperties {
 	public final String POC_SERVICE_AUDIT_VALIDATE = "POC_SERVICE_AUDIT_VALIDATE";
 	public final String ACT_UPDATE_CART = "updateCart";
 	
+	private static final Logger logger = LogManager.getLogger(ConfigurationProperties.class);
+			
 	public ConfigurationProperties getInstance() {
 		if (instance == null) {
 			return instance = new ConfigurationProperties();
@@ -37,7 +41,7 @@ public class ConfigurationProperties {
 			setCacheSource(pr.getProperty(CACHE_SOURCE));	
 			setSecurityEndpointValidation(System.getenv("POC_SERVICE_SECURITY_VALIDATE"));
 		}catch(Exception e) {
-			
+			logger.error("ConfigurationProperties-Error inicializando las variables", e);
 		}
 	}
 

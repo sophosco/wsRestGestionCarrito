@@ -22,7 +22,7 @@ import com.sophos.poc.wsrestgestioncarrito.util.ConfigurationProperties;
 public class GestionCarritoSecurityService {
 
 	@Autowired
-	ConfigurationProperties pr;
+	private ConfigurationProperties pr;
 	
 	private static final Logger logger = LogManager.getLogger(GestionCarritoSecurityService.class);
 	

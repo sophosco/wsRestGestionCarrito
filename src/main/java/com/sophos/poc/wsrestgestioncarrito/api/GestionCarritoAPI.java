@@ -82,17 +82,31 @@ public class GestionCarritoAPI {
 			produces = { "application/json", "application/xml" }, 
 	        consumes = { "application/json", "application/xml" },
 	        method=RequestMethod.POST)
-	public ResponseEntity<GestionCarritoConsultarRs> consultarCarrito(@ApiParam(value = "Identificador Único con formato de 32 dígitos hexadecimales divididos en guiones: 550e8400-e29b-41d4-a716-446655440000" ,required=true) @RequestHeader(value="X-RqUID", required=true) String xRqUID,@ApiParam(value = "Nemonico de Canal Origen de la Transaccion" ,required=true) @RequestHeader(value="X-Channel", required=true) String xChannel,@ApiParam(value = "IP de origen donde se realiza la invocación de servicio o api" ,required=true) @RequestHeader(value="X-IPAddr", required=true) String xIPAddr,@ApiParam(value = "Sesion o token de autenticación del uso del api" ,required=true) @RequestHeader(value="X-Sesion", required=true) String xSesion,@ApiParam(value = "Request de la solicitud de consulta carrito" ,required=true ) @Valid @RequestBody GestionCarritoConsultarRq rq) {
+	public ResponseEntity<GestionCarritoConsultarRs> consultarCarrito(
+			@ApiParam(value = "Identificador Único con formato de 32 dígitos hexadecimales divididos en guiones: 550e8400-e29b-41d4-a716-446655440000" ,required=true) 
+			@RequestHeader(value="X-RqUID", required=true) String xRqUID,
+			@ApiParam(value = "Nemonico de Canal Origen de la Transaccion" ,required=true) 
+			@RequestHeader(value="X-Channel", required=true) String xChannel,
+			@ApiParam(value = "IP de origen donde se realiza la invocación de servicio o api" ,required=true) 
+			@RequestHeader(value="X-IPAddr", required=true) String xIPAddr,
+			@ApiParam(value = "Sesion o token de autenticación del uso del api" ,required=true) 
+			@RequestHeader(value="X-Sesion", required=true) String xSesion,
+			@ApiParam(value = "Bandera para validacion de seguridad" ,required=true) 
+    		@RequestHeader(value="X-haveToken", required=false) String xHaveToken,
+			@ApiParam(value = "Request de la solicitud de consulta carrito" ,required=true ) 
+			@Valid @RequestBody GestionCarritoConsultarRq rq) {
 		GestionCarritoConsultarRs response = new GestionCarritoConsultarRs();
 		String contentType = request.getContentType();
 		String tokenSesion = request.getHeader("X-Sesion");
+		String securityValidation = request.getHeader("X-haveToken"); 
 		logger.info("GestionCarritoConsultarRq:  contentType= " + contentType + "IdSesion="+rq.getIdSession());
 		logger.info("GestionCarritoConsultarRq: " + rq.toString() );
 		String statusRs = null;
 		if (contentType != null && contentType.contains("application/json") && 
 				tokenSesion != null && tokenSesion != "") {
 			try {
-				if (security.verifyJwtToken(tokenSesion, rq.getIdSession())) {
+				if (( securityValidation != null && securityValidation.equals("false")) ||
+						 security.verifyJwtToken(tokenSesion, rq.getIdSession())) { 
 					response = consultarCarrito.getCart(rq.getIdSession());
 					statusRs = HttpStatus.OK.toString();			
 					return new ResponseEntity<GestionCarritoConsultarRs>(response, HttpStatus.OK);
@@ -139,16 +153,30 @@ public class GestionCarritoAPI {
 			 	produces = { "application/json", "application/xml" }, 
 		        consumes = { "application/json", "application/xml" },
 		        method=RequestMethod.POST)
-	public ResponseEntity<GestionCarritoActualizarRs> actualizarCarrito(@ApiParam(value = "Identificador Único con formato de 32 dígitos hexadecimales divididos en guiones: 550e8400-e29b-41d4-a716-446655440000" ,required=true) @RequestHeader(value="X-RqUID", required=true) String xRqUID,@ApiParam(value = "Nemonico de Canal Origen de la Transaccion" ,required=true) @RequestHeader(value="X-Channel", required=true) String xChannel,@ApiParam(value = "IP de origen donde se realiza la invocación de servicio o api" ,required=true) @RequestHeader(value="X-IPAddr", required=true) String xIPAddr,@ApiParam(value = "Sesion o token de autenticación del uso del api" ,required=true) @RequestHeader(value="X-Sesion", required=true) String xSesion,@ApiParam(value = "Request de solicitud actualizacion carrito" ,required=true )  @Valid @RequestBody GestionCarritoActualizarRq rq) {		
+	public ResponseEntity<GestionCarritoActualizarRs> actualizarCarrito(
+			@ApiParam(value = "Identificador Único con formato de 32 dígitos hexadecimales divididos en guiones: 550e8400-e29b-41d4-a716-446655440000" ,required=true) 
+			@RequestHeader(value="X-RqUID", required=true) String xRqUID,
+			@ApiParam(value = "Nemonico de Canal Origen de la Transaccion" ,required=true) 
+			@RequestHeader(value="X-Channel", required=true) String xChannel,
+			@ApiParam(value = "IP de origen donde se realiza la invocación de servicio o api" ,required=true) 
+			@RequestHeader(value="X-IPAddr", required=true) String xIPAddr,
+			@ApiParam(value = "Sesion o token de autenticación del uso del api" ,required=true) 
+			@RequestHeader(value="X-Sesion", required=true) String xSesion,
+			@ApiParam(value = "Bandera para validacion de seguridad" ,required=true) 
+    		@RequestHeader(value="X-haveToken", required=false) String xHaveToken,
+			@ApiParam(value = "Request de solicitud actualizacion carrito" ,required=true )  
+			@Valid @RequestBody GestionCarritoActualizarRq rq) {		
 		String contentType = request.getContentType();
 		String tokenSesion = request.getHeader("X-Sesion");
+		String securityValidation = request.getHeader("X-haveToken"); 
 		logger.info("GestionCarritoActualizarRq:  contentType= " + contentType + "IdSesion="+rq.getIdSession());
 		logger.info("GestionCarritoActualizarRq: " + rq.toString() );
 		String statusRs = null;
 		if (contentType != null && contentType.contains("application/json") && 
 				tokenSesion != null && tokenSesion != "") {
 			try {	
-				if (security.verifyJwtToken(tokenSesion, rq.getIdSession())) {
+				if (( securityValidation != null && securityValidation.equals("false")) ||
+						 security.verifyJwtToken(tokenSesion, rq.getIdSession())) {
 					actualizarCarrito.updateCart(rq.getIdSession(), rq);
 					String rqUID =  request.getHeader("X-RqUID");
 					String channel =  request.getHeader("X-Channel");

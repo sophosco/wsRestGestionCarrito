@@ -19,7 +19,7 @@ import com.sophos.poc.wsrestgestioncarrito.util.ConfigurationProperties;
 @PropertySource("classpath:application.properties")
 public class RedisJavaConfiguration {
 	@Autowired
-	ConfigurationProperties cts;
+	private ConfigurationProperties cts;
 	@Bean
 	JedisConnectionFactory jedisConnectionFactory() {
 		int 	redisPort = Integer.parseInt(System.getenv().get(cts.POC_REDIS_PORT) );
