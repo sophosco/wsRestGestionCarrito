@@ -4,7 +4,7 @@ metadata:
   name: wsrestgestioncarrito-configmap
   namespace: dev
 data:
-  POC_REDIS_HOST: 'http://redis-master'
+  POC_REDIS_HOST: 'redis-master'
   POC_REDIS_PORT: '6379'
   POC_CASSANDRA_KEYSPACE: 'sophospoc'
   POC_CASSANDRA_HOST: 'http://cassandra-'
