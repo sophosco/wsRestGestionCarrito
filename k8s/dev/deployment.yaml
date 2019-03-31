@@ -1,0 +1,31 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: wsrestgestioncarrito-deployment
+  namespace: dev
+  labels:
+    app: wsrestgestioncarrito
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wsrestgestioncarrito
+  template:
+    metadata:
+      labels:
+        app: wsrestgestioncarrito
+    spec:
+      containers:
+        - name: wsrestgestioncarrito
+          image: 887482798966.dkr.ecr.us-east-2.amazonaws.com/sophosstore/wsrestgestioncarrito:beta
+          resources:
+            limits:
+              memory: "500Mi"
+              cpu: "200m"
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 18080
+          command: [ "/bin/sh", "-c", "env" ]
+          envFrom:
+          - configMapRef:
+              name: wsrestgestioncarrito-configmap
