@@ -9,35 +9,35 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class GaleriaProductoDTO {
 
 	@JsonProperty("small")
-	private String small = null;
+	private Object small = null;
 
 	@JsonProperty("medium")
-	private String medium = null;
+	private Object medium = null;
 
 	@JsonProperty("big")
-	private String big = null;
+	private Object big = null;
 
-	public String getSmall() {
+	public Object getSmall() {
 		return small;
 	}
 
-	public void setSmall(String small) {
+	public void setSmall(Object small) {
 		this.small = small;
 	}
 
-	public String getMedium() {
+	public Object getMedium() {
 		return medium;
 	}
 
-	public void setMedium(String medium) {
+	public void setMedium(Object medium) {
 		this.medium = medium;
 	}
 
-	public String getBig() {
+	public Object getBig() {
 		return big;
 	}
 
-	public void setBig(String big) {
+	public void setBig(Object big) {
 		this.big = big;
 	}
 

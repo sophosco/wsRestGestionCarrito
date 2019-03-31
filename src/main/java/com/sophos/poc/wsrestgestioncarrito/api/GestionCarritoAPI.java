@@ -103,7 +103,7 @@ public class GestionCarritoAPI {
 		logger.info("GestionCarritoConsultarRq: " + rq.toString() );
 		String statusRs = null;
 		if (contentType != null && contentType.contains("application/json") && 
-				tokenSesion != null && tokenSesion != "") {
+				tokenSesion != null && !tokenSesion.equals("")) {
 			try {
 				if (( securityValidation != null && securityValidation.equals("false")) ||
 						 security.verifyJwtToken(tokenSesion, rq.getIdSession())) { 
@@ -173,7 +173,7 @@ public class GestionCarritoAPI {
 		logger.info("GestionCarritoActualizarRq: " + rq.toString() );
 		String statusRs = null;
 		if (contentType != null && contentType.contains("application/json") && 
-				tokenSesion != null && tokenSesion != "") {
+				tokenSesion != null && !tokenSesion.equals("")) {
 			try {	
 				if (( securityValidation != null && securityValidation.equals("false")) ||
 						 security.verifyJwtToken(tokenSesion, rq.getIdSession())) {

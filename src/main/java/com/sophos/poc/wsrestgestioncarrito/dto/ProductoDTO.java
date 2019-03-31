@@ -26,13 +26,13 @@ public class ProductoDTO {
 	private Long newPrice = null;
 	
 	@JsonProperty("discount")
-	private Long discount = null;	
+	private String discount = null;	
 	
 	@JsonProperty("ratingsCount")
-	private Long ratingsCount = null;	
+	private String ratingsCount = null;	
 	
 	@JsonProperty("ratingsValue")
-	private Long ratingsValue = null;	
+	private String ratingsValue = null;	
 	
 	@JsonProperty("description")
 	private String description = null;
@@ -62,7 +62,7 @@ public class ProductoDTO {
 	private Long weight = null;
 	
 	@JsonProperty("categoryId")
-	private Long categoryId = null;
+	private String categoryId = null;
 
 	public Long getId() {
 		return id;
@@ -104,27 +104,27 @@ public class ProductoDTO {
 		this.newPrice = newPrice;
 	}
 
-	public Long getDiscount() {
+	public String getDiscount() {
 		return discount;
 	}
 
-	public void setDiscount(Long discount) {
+	public void setDiscount(String discount) {
 		this.discount = discount;
 	}
 
-	public Long getRatingsCount() {
+	public String getRatingsCount() {
 		return ratingsCount;
 	}
 
-	public void setRatingsCount(Long ratingsCount) {
+	public void setRatingsCount(String ratingsCount) {
 		this.ratingsCount = ratingsCount;
 	}
 
-	public Long getRatingsValue() {
+	public String getRatingsValue() {
 		return ratingsValue;
 	}
 
-	public void setRatingsValue(Long ratingsValue) {
+	public void setRatingsValue(String ratingsValue) {
 		this.ratingsValue = ratingsValue;
 	}
 
@@ -200,11 +200,11 @@ public class ProductoDTO {
 		this.weight = weight;
 	}
 
-	public Long getCategoryId() {
+	public String getCategoryId() {
 		return categoryId;
 	}
 
-	public void setCategoryId(Long categoryId) {
+	public void setCategoryId(String categoryId) {
 		this.categoryId = categoryId;
 	}
 
