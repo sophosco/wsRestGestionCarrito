@@ -1,5 +1,7 @@
 package com.sophos.poc.wsrestgestioncarrito.api;
 
+import java.util.Calendar;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -198,6 +200,11 @@ public class GestionCarritoAPI {
 		statusRs = HttpStatus.NOT_IMPLEMENTED.toString();
 		logger.info("GestionCarritoActualizarRs - HttpStatus: "+ statusRs );
 		return new ResponseEntity<GestionCarritoActualizarRs>(HttpStatus.NOT_IMPLEMENTED);
+	}
+	
+	@RequestMapping(value="/health", method=RequestMethod.GET)
+	public String publishMessage() {
+		return "Servicio Activo"+ Calendar.getInstance().getTime().toString();
 	}
 	
 }

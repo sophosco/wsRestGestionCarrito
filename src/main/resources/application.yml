@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: wsRestGestionCarrito
+server:
+  port: 18080
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://SBBOGLAPPROJO7.sophos.col.com:8761/eureka}
+  instance:
+    preferIpAddress: true
+    status-page-url-path: /v2/api-docs/
+    health-check-url-path: /gestioncarrito/health
+    virtual-host-name: SBBOGLAPPROJO7
+    metadata-map:
+      app-owner: Sophos Solutions
+      description: Servicio que expone funcionalidades para la gestion del carrito
