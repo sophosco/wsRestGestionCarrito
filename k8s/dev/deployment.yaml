@@ -25,7 +25,6 @@ spec:
           imagePullPolicy: Always
           ports:
           - containerPort: 18080
-          - containerPort: 443
           envFrom:
           - configMapRef:
               name: wsrestgestioncarrito-configmap

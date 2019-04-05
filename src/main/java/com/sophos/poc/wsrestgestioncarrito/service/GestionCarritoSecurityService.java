@@ -30,7 +30,7 @@ public class GestionCarritoSecurityService {
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-
+		headers.add("Content-Type", MediaType.APPLICATION_JSON.toString());
 		GestionCarritoSecurityRq inRequest = new GestionCarritoSecurityRq();
 		SecurityRequestHeader requestHeader = new SecurityRequestHeader();
 		SecurityRequestPayload requestPayload = new SecurityRequestPayload(); 
