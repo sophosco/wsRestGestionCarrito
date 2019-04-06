@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
+@CrossOrigin(maxAge = 3600)
 @RequestMapping("/gestioncarrito")
 public class GestionCarritoAPI {
 
@@ -57,6 +59,7 @@ public class GestionCarritoAPI {
 		this.actualizarCarrito = actualizarCarrito;
 		this.auditoria = auditoria;
 	}	
+	
 	
 	@ApiOperation(value = "Servicio encargado de retornar la informacion del carrito de compras asociado a la sesion del usuario", response = GestionCarritoConsultarRs.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Transacción Exitosa"),
