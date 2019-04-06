@@ -60,7 +60,7 @@ public class GestionCarritoAPI {
 		this.auditoria = auditoria;
 	}	
 	
-	
+
 	@ApiOperation(value = "Servicio encargado de retornar la informacion del carrito de compras asociado a la sesion del usuario", response = GestionCarritoConsultarRs.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Transacción Exitosa"),
 			@ApiResponse(code = 200, message = "Transacción Exitosa"),
@@ -131,6 +131,7 @@ public class GestionCarritoAPI {
 		logger.info("GestionCarritoConsultarRs - HttpStatus: "+ statusRs );
 		return  new ResponseEntity<GestionCarritoConsultarRs>(HttpStatus.NOT_IMPLEMENTED);
 	}
+
 	
 	@ApiOperation(value = "Servicio encargado de actualizar la informacion del carrito de compras asociado a la sesion del usuario", response = GestionCarritoConsultarRs.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Transacción Exitosa"),
