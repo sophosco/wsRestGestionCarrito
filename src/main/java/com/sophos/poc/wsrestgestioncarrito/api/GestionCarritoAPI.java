@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,6 +59,7 @@ public class GestionCarritoAPI {
 		this.auditoria = auditoria;
 	}	
 	
+	@CrossOrigin
 	@ApiOperation(value = "Servicio encargado de retornar la informacion del carrito de compras asociado a la sesion del usuario", response = GestionCarritoConsultarRs.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Transacción Exitosa"),
 			@ApiResponse(code = 200, message = "Transacción Exitosa"),
@@ -128,7 +130,7 @@ public class GestionCarritoAPI {
 		logger.info("GestionCarritoConsultarRs - HttpStatus: "+ statusRs );
 		return  new ResponseEntity<GestionCarritoConsultarRs>(HttpStatus.NOT_IMPLEMENTED);
 	}
-	
+	@CrossOrigin 
 	@ApiOperation(value = "Servicio encargado de actualizar la informacion del carrito de compras asociado a la sesion del usuario", response = GestionCarritoConsultarRs.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Transacción Exitosa"),
 			@ApiResponse(code = 200, message = "Transacción Exitosa"),
