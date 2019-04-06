@@ -13,6 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/gestioncarrito/*")
 		.allowedOrigins("*")
-		.allowedMethods("POST", "OPTIONS");
+		.allowedMethods("POST", "OPTIONS")
+		.allowedHeaders("*");
 	}
 }
