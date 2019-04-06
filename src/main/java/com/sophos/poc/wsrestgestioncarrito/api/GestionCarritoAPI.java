@@ -8,6 +8,8 @@ import javax.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.DispatcherServlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sophos.poc.wsrestgestioncarrito.model.request.GestionCarritoActualizarRq;
@@ -61,6 +64,15 @@ public class GestionCarritoAPI {
 	}	
 	
 
+	
+	@Bean(name = DispatcherServletAutoConfiguration.DEFAULT_DISPATCHER_SERVLET_BEAN_NAME)
+	public DispatcherServlet dispatcherServlet() {
+	    DispatcherServlet dispatcherServlet = new DispatcherServlet();
+	    dispatcherServlet.setDispatchOptionsRequest(true);
+	    return dispatcherServlet;
+	}
+	
+	
 	@ApiOperation(value = "Servicio encargado de retornar la informacion del carrito de compras asociado a la sesion del usuario", response = GestionCarritoConsultarRs.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Transacción Exitosa"),
 			@ApiResponse(code = 200, message = "Transacción Exitosa"),
