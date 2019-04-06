@@ -1,7 +1,6 @@
 package com.sophos.poc.wsrestgestioncarrito.service;
 
 import java.util.Arrays;
-import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -36,7 +35,7 @@ public class GestionCarritoSecurityService {
 		SecurityRequestHeader requestHeader = new SecurityRequestHeader();
 		SecurityRequestPayload requestPayload = new SecurityRequestPayload(); 
 		requestHeader.setToken(token);
-		requestPayload.setId(payload+UUID.randomUUID());
+		requestPayload.setId(payload);
 		inRequest.setRequestHeader(requestHeader );
 		inRequest.setRequestPayload(requestPayload );
 		

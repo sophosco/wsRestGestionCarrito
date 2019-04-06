@@ -1,6 +1,7 @@
 package com.sophos.poc.wsrestgestioncarrito.api;
 
 import java.util.Calendar;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -102,6 +103,9 @@ public class GestionCarritoAPI {
 		String contentType = request.getContentType();
 		String tokenSesion = request.getHeader("X-Sesion");
 		String securityValidation = request.getHeader("X-haveToken"); 
+		// TODO: Esto se debe eliminar
+		String sesion = UUID.randomUUID().toString();
+		rq.setIdSession(sesion);
 		logger.info("GestionCarritoConsultarRq:  contentType= " + contentType + "IdSesion="+rq.getIdSession());
 		logger.info("GestionCarritoConsultarRq: " + rq.toString() );
 		String statusRs = null;
@@ -173,6 +177,8 @@ public class GestionCarritoAPI {
 		String contentType = request.getContentType();
 		String tokenSesion = request.getHeader("X-Sesion");
 		String securityValidation = request.getHeader("X-haveToken"); 
+		String sesion = UUID.randomUUID().toString();
+		rq.setIdSession(sesion);
 		logger.info("GestionCarritoActualizarRq:  contentType= " + contentType + "IdSesion="+rq.getIdSession());
 		logger.info("GestionCarritoActualizarRq: " + rq.toString() );
 		String statusRs = null;
@@ -180,7 +186,7 @@ public class GestionCarritoAPI {
 				tokenSesion != null && !tokenSesion.equals("")) {
 			try {	
 				if (( securityValidation != null && securityValidation.equals("false")) ||
-						 security.verifyJwtToken(tokenSesion, rq.getIdSession())) {
+					security.verifyJwtToken(tokenSesion, rq.getIdSession())) {
 					actualizarCarrito.updateCart(rq.getIdSession(), rq);
 					String rqUID =  request.getHeader("X-RqUID");
 					String channel =  request.getHeader("X-Channel");
