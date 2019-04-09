@@ -67,6 +67,14 @@
 			<version>2.9.0</version><!--$NO-MVN-MAN-VER$ -->
 			<type>jar</type>
 		</dependency>
+		
+		<!-- 
+		DESCUBIRMIENTO EUREKA
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+			<version>2.0.2.RELEASE</version>
+		</dependency> -->
 
 	</dependencies>
 
